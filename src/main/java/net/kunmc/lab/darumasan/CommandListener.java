@@ -32,7 +32,8 @@ public class CommandListener implements CommandExecutor {
                     double distance = oni.getLocation().distance(locationOfCommandBlock);
                     if(2 > distance) {
                         if(!DarumaSan.getIsOnCommandBlock()) {
-                            registerOniEvent(oni, locationOfCommandBlock);
+                            DarumaSan.setIsOnCommandBlock(true);
+                            new OniListener(plugin, oni, locationOfCommandBlock);
                         }
                         break;
                     }
@@ -40,10 +41,6 @@ public class CommandListener implements CommandExecutor {
             }
         }
         return false;
-    }
-
-    public void registerOniEvent(Player oni, Location locationOfCommandBlock) {
-        new OniListener(plugin, oni, locationOfCommandBlock);
     }
 
 }

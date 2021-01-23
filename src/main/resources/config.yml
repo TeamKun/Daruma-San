@@ -1,0 +1,6 @@
+degree: 90
+judgePeriod: 5
+se: "BLOCK_NOTE_BLOCK_BELL"
+seLast: "BLOCK_ANVIL_LAND"
+deathLogPlayer: "は動いてしまった"
+deathLogOni: "は捕まった"
