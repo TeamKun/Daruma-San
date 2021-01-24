@@ -1,10 +1,13 @@
 package net.kunmc.lab.darumasan;
 
 import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -65,6 +68,17 @@ public class OniListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerDamageEvent(EntityDamageEvent event) {
+        if(!(event.getEntity().getType() == EntityType.PLAYER)) {
+            return;
+        }
+        Player player = (Player) event.getEntity();
+        if(player.getName().equals(oni.getName())) {
+            player.setHealth(0);
+        }
+    }
+
+    @EventHandler
     private void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         if(player.getName().equals(oni.getName())) {
@@ -75,13 +89,20 @@ public class OniListener implements Listener {
     private void sendTitleMessage(String message) {
         plugin.getServer().getOnlinePlayers().forEach(player -> {
             player.resetTitle();
+            if(DarumaSan.getSeCustom() != null && !message.equals("Start")) {
+                player.getWorld().playSound(player.getLocation(), DarumaSan.getSeCustom() + "." + (message.length() - 1), 1, 1);
+            } else {
+                if(message.length() == 10) {
+                    player.getWorld().playSound(player.getLocation(), Sound.valueOf(DarumaSan.getSeLast()), 1, 1);
+                } else {
+                    player.getWorld().playSound(player.getLocation(), Sound.valueOf(DarumaSan.getSe()), 1, 1);
+                }
+            }
             if(message.length() == 10) {
                 player.sendTitle("§6" + message, "", 0, 70, 20);
-                player.getWorld().playSound(player.getLocation(), DarumaSan.getSeLast(), 1, 1);
                 return;
             }
             player.sendTitle(message, "", 0, 70, 20);
-            player.getWorld().playSound(player.getLocation(), DarumaSan.getSe(), 1, 1);
         });
     }
 

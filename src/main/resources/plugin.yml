@@ -5,5 +5,5 @@ api-version: 1.15
 commands:
   daruma:
     description: daruma.
-    usage: /<command>
+    usage: /<command> [おに(プレイヤー名)] ※第一引数に指定がない場合送信者がおに
     permission: op

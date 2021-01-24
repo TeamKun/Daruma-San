@@ -1,6 +1,5 @@
 package net.kunmc.lab.darumasan;
 
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,10 +8,12 @@ public final class DarumaSan extends JavaPlugin {
     private static boolean isOnCommandBlock = false;
     private static int degree = 90;
     private static int judgePeriod = 5;
-    private static Sound se = Sound.BLOCK_NOTE_BLOCK_BELL;
-    private static Sound seLast = Sound.BLOCK_ANVIL_LAND;
+    private static String se = "BLOCK_NOTE_BLOCK_BELL";
+    private static String seLast = "BLOCK_ANVIL_LAND";
     private static String deathLogPlayer = "は動いてしまった";
     private static String deathLogOni = "は捕まった";
+
+    private static String seCustom = null;
 
     public static boolean getIsOnCommandBlock() {
         return isOnCommandBlock;
@@ -23,23 +24,26 @@ public final class DarumaSan extends JavaPlugin {
     }
 
     public static void setConfig(FileConfiguration config) {
-        try {
+        if(config.contains("degree")) {
             degree = config.getInt("degree");
-            if(degree > 180) {
-                degree = 90;
-            }
+        }
+        if(config.contains("judgePeriod")) {
             judgePeriod = config.getInt("judgePeriod");
-            se = Sound.valueOf(config.getString("se"));
-            seLast = Sound.valueOf(config.getString("seLast"));
+        }
+        if(config.contains("se")) {
+            se = config.getString("se");
+        }
+        if(config.contains("seLast")) {
+            seLast = config.getString("seLast");
+        }
+        if(config.contains("deathLogPlayer")) {
             deathLogPlayer = config.getString("deathLogPlayer");
+        }
+        if(config.contains("deathLogOni")) {
             deathLogOni = config.getString("deathLogOni");
-        } catch (Exception e) {
-            degree = 90;
-            judgePeriod = 5;
-            se = Sound.BLOCK_NOTE_BLOCK_BELL;
-            seLast = Sound.BLOCK_ANVIL_LAND;
-            deathLogPlayer = "は動いてしまった";
-            deathLogOni = "は捕まった";
+        }
+        if(config.contains("seCustom")) {
+            seCustom = config.getString("seCustom");
         }
     }
 
@@ -51,11 +55,11 @@ public final class DarumaSan extends JavaPlugin {
         return judgePeriod;
     }
 
-    public static Sound getSe() {
+    public static String getSe() {
         return se;
     }
 
-    public static Sound getSeLast() {
+    public static String getSeLast() {
         return seLast;
     }
 
@@ -65,6 +69,10 @@ public final class DarumaSan extends JavaPlugin {
 
     public static String getDeathLogOni() {
         return  deathLogOni;
+    }
+
+    public static String getSeCustom() {
+        return seCustom;
     }
 
     @Override

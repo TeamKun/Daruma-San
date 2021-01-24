@@ -1,15 +1,14 @@
 package net.kunmc.lab.darumasan;
 
 import org.bukkit.Location;
-import org.bukkit.command.BlockCommandSender;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CommandListener implements CommandExecutor {
+import java.util.*;
+
+public class CommandListener implements CommandExecutor, TabCompleter {
     private JavaPlugin plugin;
 
     public CommandListener(JavaPlugin plugin) {
@@ -39,8 +38,38 @@ public class CommandListener implements CommandExecutor {
                     }
                 }
             }
+            if(sender instanceof Player) {
+                if(args.length == 0) {
+                    Player oni = (Player) sender;
+                    Location locationOfOni = oni.getLocation();
+                    new OniListener(plugin, oni, locationOfOni);
+                    return true;
+                }
+                if(args.length == 1) {
+                    plugin.getServer().getOnlinePlayers().forEach(player -> {
+                        if (player.getName().equals(args[0])) {
+                            new OniListener(plugin, player, player.getLocation());
+                        }
+                    });
+                    return true;
+                }
+            }
         }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        if(command.getName().equals("daruma")) {
+            if(args.length == 1) {
+                ArrayList<String> players = new ArrayList<String>();
+                plugin.getServer().getOnlinePlayers().forEach(player -> {
+                    players.add(player.getName());
+                });
+                return players;
+            }
+        }
+        return plugin.onTabComplete(sender, command, label, args);
     }
 
 }

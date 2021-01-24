@@ -1,10 +1,12 @@
 package net.kunmc.lab.darumasan;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -72,6 +74,17 @@ public class PlayerListener implements Listener {
             event.setDeathMessage(player.getName() + DarumaSan.getDeathLogOni());
         }
         event.setDeathMessage(player.getName() + DarumaSan.getDeathLogPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        if(!(event.getEntity().getType() == EntityType.PLAYER)) {
+            return;
+        }
+        Player player = (Player) event.getEntity();
+        if(player.getName().equals(oni.getName())) {
+            event.setCancelled(true);
+        }
     }
 
 
