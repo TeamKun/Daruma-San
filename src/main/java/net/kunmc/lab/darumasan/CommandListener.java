@@ -39,20 +39,15 @@ public class CommandListener implements CommandExecutor, TabCompleter {
                 }
             }
             if(sender instanceof Player) {
-                if(args.length == 0) {
-                    Player oni = (Player) sender;
-                    Location locationOfOni = oni.getLocation();
-                    new OniListener(plugin, oni, locationOfOni);
-                    return true;
+                if(args.length != 1) {
+                    return false;
                 }
-                if(args.length == 1) {
-                    plugin.getServer().getOnlinePlayers().forEach(player -> {
-                        if (player.getName().equals(args[0])) {
-                            new OniListener(plugin, player, player.getLocation());
-                        }
-                    });
-                    return true;
-                }
+                plugin.getServer().getOnlinePlayers().forEach(player -> {
+                    if (player.getName().equals(args[0])) {
+                        new OniListener(plugin, player, player.getLocation());
+                    }
+                });
+                return true;
             }
         }
         return false;
