@@ -55,8 +55,8 @@ public class PlayerListener implements Listener {
                 target.setHealth(0);
                 return;
             }
-            int yaw = (int) getPlayerFirstLoc(target).getYaw();
-            int yawNow = (int) target.getLocation().getYaw();
+            int yaw = (int) Location.normalizeYaw(getPlayerFirstLoc(target).getYaw());
+            int yawNow = (int) Location.normalizeYaw(target.getLocation().getYaw());
             int differenceOfYaw = Math.abs(yaw - yawNow);
             if(differenceOfYaw > 90) {
                 target.setHealth(0);

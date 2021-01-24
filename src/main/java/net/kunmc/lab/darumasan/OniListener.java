@@ -24,7 +24,7 @@ public class OniListener implements Listener {
         this.oni = oni;
         this.locationOfCommandBlock = locationOfCommandBlock;
         this.beforeLetterCount = 0;
-        yaw = (int) oni.getLocation().getYaw();
+        yaw = (int) Location.normalizeYaw(oni.getLocation().getYaw());
         sendTitleMessage("Start");
     }
 
@@ -40,7 +40,7 @@ public class OniListener implements Listener {
                 HandlerList.unregisterAll(plugin);
                 return;
             }
-            int yawNow = (int) oni.getLocation().getYaw();
+            int yawNow = (int) Location.normalizeYaw(oni.getLocation().getYaw());
             int differenceOfYaw = Math.abs(yaw - yawNow);
             int end = DarumaSan.getDegree();
             if (end == 0) {
@@ -52,6 +52,9 @@ public class OniListener implements Listener {
                 return;
             }
             letterCount = (int) differenceOfYaw / unitOfCount;
+            if(differenceOfYaw >= end) {
+                letterCount = 10;
+            }
             if (letterCount == beforeLetterCount) {
                 return;
             }
