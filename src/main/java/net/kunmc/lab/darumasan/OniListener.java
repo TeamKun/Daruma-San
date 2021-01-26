@@ -48,8 +48,11 @@ public class OniListener implements Listener {
             }
             int unitOfCount = (int) end / 10;
             int letterCount;
-            if (unitOfCount > differenceOfYaw) {
+            if (unitOfCount > differenceOfYaw)  {
                 return;
+            }
+            if(differenceOfYaw >= 180) {
+                differenceOfYaw = Math.abs(differenceOfYaw - 360);
             }
             letterCount = (int) differenceOfYaw / unitOfCount;
             if(differenceOfYaw >= end) {
@@ -59,6 +62,7 @@ public class OniListener implements Listener {
                 return;
             }
             beforeLetterCount = letterCount;
+            plugin.getServer().broadcastMessage(""+differenceOfYaw);
             final String title_message = "だるまさんがころんだ";
             sendTitleMessage(title_message.substring(0, letterCount));
             if (letterCount == 10) {

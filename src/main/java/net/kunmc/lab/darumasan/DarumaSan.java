@@ -26,6 +26,9 @@ public final class DarumaSan extends JavaPlugin {
     public static void setConfig(FileConfiguration config) {
         if(config.contains("degree")) {
             degree = config.getInt("degree");
+            if(degree >= 180) {
+                degree = 90;
+            }
         }
         if(config.contains("judgePeriod")) {
             judgePeriod = config.getInt("judgePeriod");
