@@ -72,6 +72,8 @@ public class PlayerListener implements Listener {
         Player player = event.getEntity();
         if(player.getName().equals(oni.getName())) {
             event.setDeathMessage(player.getName() + DarumaSan.getDeathLogOni());
+        } else if (DarumaSan.getSeCustom() != null) {
+            player.getWorld().playSound(player.getLocation(), DarumaSan.getSeCustom() + "." + "death", 1, 1);
         }
         event.setDeathMessage(player.getName() + DarumaSan.getDeathLogPlayer());
     }

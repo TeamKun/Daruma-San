@@ -62,7 +62,7 @@ public class OniListener implements Listener {
                 return;
             }
             beforeLetterCount = letterCount;
-            plugin.getServer().broadcastMessage(""+differenceOfYaw);
+            //plugin.getServer().broadcastMessage(""+differenceOfYaw);
             final String title_message = "だるまさんがころんだ";
             sendTitleMessage(title_message.substring(0, letterCount));
             if (letterCount == 10) {
